@@ -4,23 +4,74 @@ import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 import { Calendar, MapPin, Users, Clock, ArrowLeft, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useEvent } from '@/api/hooks/useEvents';
+import { useEvent, useJoinEvent, useLeaveEvent } from '@/api/hooks/useEvents';
+import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/components/ui/use-toast';
 
 const EventDetailPage = () => {
   const { id } = useParams();
   const { data: event, isLoading, error } = useEvent(id);
+  const { user } = useAuth();
+  const joinEventMutation = useJoinEvent();
+  const leaveEventMutation = useLeaveEvent();
 
-  const handleJoinEvent = () => {
-    toast({
-      title: '🚧 Esta funcionalidad no está implementada aún—¡pero no te preocupes! Puedes solicitarla en tu próximo prompt! 🚀',
-    });
+  const handleJoinEvent = async () => {
+    if (!user) {
+      toast({
+        title: 'Error',
+        description: 'Debes iniciar sesión para unirte a eventos',
+        variant: 'destructive'
+      });
+      return;
+    }
+
+    try {
+      await joinEventMutation.mutateAsync({ eventId: id, userId: user.id });
+      toast({
+        title: '¡Te has unido al evento!',
+        description: 'Recibirás notificaciones sobre este evento',
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'No se pudo unir al evento. Inténtalo de nuevo.',
+        variant: 'destructive'
+      });
+    }
+  };
+
+  const handleLeaveEvent = async () => {
+    if (!user) return;
+    
+    try {
+      await leaveEventMutation.mutateAsync({ eventId: id, userId: user.id });
+      toast({
+        title: 'Has salido del evento',
+        description: 'Ya no recibirás notificaciones sobre este evento',
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'No se pudo salir del evento. Inténtalo de nuevo.',
+        variant: 'destructive'
+      });
+    }
   };
 
   const handleShareEvent = () => {
-    toast({
-      title: '🚧 Esta funcionalidad no está implementada aún—¡pero no te preocupes! Puedes solicitarla en tu próximo prompt! 🚀',
-    });
+    if (navigator.share) {
+      navigator.share({
+        title: event.title,
+        text: event.description,
+        url: window.location.href,
+      });
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      toast({
+        title: 'Enlace copiado',
+        description: 'El enlace del evento se ha copiado al portapapeles',
+      });
+    }
   };
 
   if (isLoading) {

@@ -9,7 +9,7 @@ const AdminEventForm = ({ onEventCreated }) => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    category: 'otaku',
+    category: 'anime',
     date: '',
     time: '',
     location: '',
@@ -20,7 +20,7 @@ const AdminEventForm = ({ onEventCreated }) => {
   });
 
   const eventCategories = {
-    'otaku': { emoji: '🎌', name: 'Otaku/Anime' },
+    'anime': { emoji: '🎌', name: 'Anime' },
     'musica': { emoji: '🎵', name: 'Música' },
     'gastronomia': { emoji: '🍕', name: 'Gastronomía' },
     'deportes': { emoji: '⚽', name: 'Deportes' },
@@ -57,7 +57,7 @@ const AdminEventForm = ({ onEventCreated }) => {
         setFormData({
           title: '',
           description: '',
-          category: 'otaku',
+          category: 'anime',
           date: '',
           time: '',
           location: '',
@@ -90,7 +90,7 @@ const AdminEventForm = ({ onEventCreated }) => {
       {/* ✅ Botón flotante para admin */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white p-4 rounded-full shadow-2xl transform hover:scale-110 transition-all"
+        className="fixed bottom-20 right-6 z-50 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white p-4 rounded-full shadow-2xl transform hover:scale-110 transition-all"
         title="Agregar Evento (Admin)"
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

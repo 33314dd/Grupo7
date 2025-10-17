@@ -3,25 +3,22 @@ import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 import { Search, Filter, Calendar, MapPin, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useEvents } from '@/api/hooks/useEvents';
+import { useEvents, useCategories } from '@/api/hooks/useEvents';
 import { useEventStore } from '@/store/eventStore';
 import { toast } from '@/components/ui/use-toast';
 
 const EventsPage = () => {
   const { filters, setFilters } = useEventStore();
   const { data: events = [], isLoading, error } = useEvents(filters);
+  const { data: categoriesData = [] } = useCategories();
   const [searchTerm, setSearchTerm] = useState(filters.search || '');
 
   const categories = [
     { value: '', label: 'Todas las categorías' },
-    { value: 'music', label: 'Música' },
-    { value: 'sports', label: 'Deportes' },
-    { value: 'technology', label: 'Tecnología' },
-    { value: 'food', label: 'Gastronomía' },
-    { value: 'art', label: 'Arte' },
-    { value: 'business', label: 'Negocios' },
-    { value: 'education', label: 'Educación' },
-    { value: 'other', label: 'Otros' },
+    ...categoriesData.map(cat => ({
+      value: cat.id,
+      label: cat.name
+    }))
   ];
 
   const handleSearch = (e) => {
@@ -165,7 +162,7 @@ const EventsPage = () => {
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-xs font-semibold text-blue-400 uppercase tracking-wide">
-                        {categories.find(c => c.value === event.category)?.label || 'Evento'}
+                        {event.event_categories?.name || 'Evento'}
                       </span>
                       <span className="text-white/60 text-sm">
                         {new Date(event.date).toLocaleDateString()}

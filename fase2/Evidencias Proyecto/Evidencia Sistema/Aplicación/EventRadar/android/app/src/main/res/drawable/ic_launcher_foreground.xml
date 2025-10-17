@@ -1,0 +1,46 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Círculo principal -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2"
+        android:strokeAlpha="0.4"
+        android:pathData="M54,54 m-25,0 a25,25 0 1,1 50,0 a25,25 0 1,1 -50,0" />
+    
+    <!-- Círculo interior -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.5"
+        android:strokeAlpha="0.6"
+        android:pathData="M54,54 m-18,0 a18,18 0 1,1 36,0 a18,18 0 1,1 -36,0" />
+    
+    <!-- Letra "E" - Más grande y clara -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M38,40 L48,40 L48,44 L42,44 L42,52 L47,52 L47,56 L42,56 L42,64 L48,64 L48,68 L38,68 L38,40 Z" />
+    
+    <!-- Letra "R" - Más grande y clara -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M60,40 L70,40 L70,44 L64,44 L64,50 L69,50 L69,54 L64,54 L64,58 L68,58 L70,68 L66,68 L64,58 L64,68 L60,68 L60,40 Z" />
+    
+    <!-- Línea diagonal del radar -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:pathData="M54,54 L72,36" />
+    
+    <!-- Punto central del radar -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,54 m-2,0 a2,2 0 1,1 4,0 a2,2 0 1,1 -4,0" />
+    
+</vector>

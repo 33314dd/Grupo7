@@ -98,9 +98,10 @@ export const useJoinEvent = () => {
   const queryClient = useQueryClient();
   
   return useMutation({
-    mutationFn: eventService.joinEvent,
+    mutationFn: ({ eventId, userId }) => eventService.joinEvent(eventId, userId),
     onSuccess: () => {
       queryClient.invalidateQueries(['events']);
+      queryClient.invalidateQueries(['favorites']);
       toast({
         title: '¡Te has unido al evento!',
         description: 'Recibirás notificaciones sobre este evento.',
@@ -113,5 +114,44 @@ export const useJoinEvent = () => {
         variant: 'destructive',
       });
     },
+  });
+};
+
+export const useLeaveEvent = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: ({ eventId, userId }) => eventService.leaveEvent(eventId, userId),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['events']);
+      queryClient.invalidateQueries(['favorites']);
+      toast({
+        title: 'Has salido del evento',
+        description: 'Ya no recibirás notificaciones sobre este evento.',
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: 'Error',
+        description: 'No se pudo salir del evento.',
+        variant: 'destructive',
+      });
+    },
+  });
+};
+
+export const useCategories = () => {
+  return useQuery({
+    queryKey: ['categories'],
+    queryFn: eventService.getCategories,
+    staleTime: 1000 * 60 * 30, // 30 minutes
+  });
+};
+
+export const useUserFavorites = (userId) => {
+  return useQuery({
+    queryKey: ['favorites', userId],
+    queryFn: () => eventService.getUserFavorites(userId),
+    enabled: !!userId,
   });
 };

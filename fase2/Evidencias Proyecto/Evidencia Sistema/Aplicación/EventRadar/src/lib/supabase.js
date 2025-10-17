@@ -1,31 +1,7 @@
-import { createClient } from '@supabase/supabase-js'
+// Re-export the canonical supabase client from config to avoid duplication
+import { supabase as _supabase } from '../config/supabase'
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+// Keep a stable export used across the codebase
+export const supabase = _supabase
 
-console.log('🔧 Supabase Config Check:')
-console.log('URL:', supabaseUrl ? '✅' : '❌ FALTA')
-console.log('Key:', supabaseAnonKey ? '✅' : '❌ FALTA')
-
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('❌ Faltan variables de entorno de Supabase')
-}
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: false, // ✅ CAMBIAR A FALSE
-    flowType: 'pkce'
-  }
-})
-
-// ✅ Test de conexión
-supabase.auth.getSession().then(({ data, error }) => {
-  if (error) {
-    console.error('❌ Error conectando a Supabase:', error)
-  } else {
-    console.log('✅ Supabase conectado correctamente')
-    console.log('Session:', data.session ? 'Activa' : 'No activa')
-  }
-})
+console.log('🧩 src/lib/supabase re-exported from src/config/supabase')

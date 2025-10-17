@@ -1,50 +1,46 @@
 import { supabase } from '@/config/supabase';
-import { createEventSchema, eventFilterSchema } from '@/domain/schemas/eventSchemas';
+// import { createEventSchema, eventFilterSchema } from '@/domain/schemas/eventSchemas';
 
 export const eventService = {
   async getEvents(filters = {}) {
     try {
-      const validatedFilters = eventFilterSchema.parse(filters);
+      console.log('🔍 Obteniendo eventos con filtros:', filters);
       
       let query = supabase
         .from('events')
         .select(`
           *,
-          profiles:user_id (
-            full_name,
-            avatar_url
+          event_categories(
+            id,
+            name,
+            icon,
+            color
           )
         `)
         .order('created_at', { ascending: false });
       
-      if (validatedFilters.category) {
-        query = query.eq('category', validatedFilters.category);
+      // Aplicar filtros
+      if (filters.search) {
+        query = query.or(`title.ilike.%${filters.search}%,description.ilike.%${filters.search}%`);
       }
       
-      if (validatedFilters.location) {
-        query = query.ilike('location', `%${validatedFilters.location}%`);
+      if (filters.category_id) {
+        query = query.eq('category_id', filters.category_id);
       }
       
-      if (validatedFilters.date_from) {
-        query = query.gte('date', validatedFilters.date_from);
-      }
-      
-      if (validatedFilters.date_to) {
-        query = query.lte('date', validatedFilters.date_to);
-      }
-      
-      if (validatedFilters.price_max) {
-        query = query.lte('price', validatedFilters.price_max);
-      }
-      
-      if (validatedFilters.search) {
-        query = query.or(`title.ilike.%${validatedFilters.search}%,description.ilike.%${validatedFilters.search}%`);
+      if (filters.location) {
+        query = query.ilike('location', `%${filters.location}%`);
       }
       
       const { data, error } = await query;
       
-      if (error) throw error;
-      return data;
+      if (error) {
+        console.error('❌ Error en getEvents:', error);
+        throw error;
+      }
+      
+      console.log('✅ Eventos obtenidos:', data?.length || 0);
+      return data || [];
     } catch (error) {
       console.error('Error fetching events:', error);
       throw error;
@@ -57,9 +53,11 @@ export const eventService = {
         .from('events')
         .select(`
           *,
-          profiles:user_id (
-            full_name,
-            avatar_url
+          event_categories(
+            id,
+            name,
+            icon,
+            color
           )
         `)
         .eq('id', id)
@@ -74,12 +72,10 @@ export const eventService = {
   },
   
   async createEvent(eventData) {
-    try {
-      const validatedData = createEventSchema.parse(eventData);
-      
+    try {      
       const { data, error } = await supabase
         .from('events')
-        .insert([validatedData])
+        .insert([eventData])
         .select()
         .single();
       
@@ -123,33 +119,76 @@ export const eventService = {
     }
   },
   
-  async joinEvent(eventId) {
+  async joinEvent(eventId, userId) {
     try {
       const { data, error } = await supabase
-        .from('event_attendees')
-        .insert([{ event_id: eventId }])
+        .from('favorites')
+        .insert([{ 
+          event_id: eventId,
+          user_id: userId
+        }])
         .select()
         .single();
-      
+
       if (error) throw error;
       return data;
     } catch (error) {
       console.error('Error joining event:', error);
       throw error;
     }
-  },
-  
-  async leaveEvent(eventId) {
+  },  async leaveEvent(eventId, userId) {
     try {
       const { error } = await supabase
-        .from('event_attendees')
+        .from('favorites')
         .delete()
-        .eq('event_id', eventId);
-      
+        .eq('event_id', eventId)
+        .eq('user_id', userId);
+
       if (error) throw error;
       return true;
     } catch (error) {
       console.error('Error leaving event:', error);
+      throw error;
+    }
+  },
+
+  async getCategories() {
+    try {
+      const { data, error } = await supabase
+        .from('event_categories')
+        .select('*')
+        .order('name');
+
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+      throw error;
+    }
+  },
+
+  async getUserFavorites(userId) {
+    try {
+      const { data, error } = await supabase
+        .from('favorites')
+        .select(`
+          *,
+          events(
+            *,
+            event_categories(
+              id,
+              name,
+              icon,
+              color
+            )
+          )
+        `)
+        .eq('user_id', userId);
+
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      console.error('Error fetching user favorites:', error);
       throw error;
     }
   },

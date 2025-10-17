@@ -118,3 +118,97 @@ body {
 .text-eventradars {
   color: #667eea;
 }
+
+/* Estilos personalizados para Leaflet Popup */
+.leaflet-popup-content-wrapper {
+  border-radius: 16px !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+.leaflet-popup-tip {
+  background: white !important;
+  border: none !important;
+  box-shadow: 0 3px 14px rgba(0,0,0,0.1) !important;
+}
+
+.leaflet-popup-close-button {
+  color: #6b7280 !important;
+  font-size: 20px !important;
+  font-weight: bold !important;
+  padding: 8px 12px !important;
+  margin-right: 4px !important;
+  margin-top: 4px !important;
+  border-radius: 8px !important;
+  transition: all 0.2s ease !important;
+}
+
+.leaflet-popup-close-button:hover {
+  background-color: #f3f4f6 !important;
+  color: #374151 !important;
+}
+
+/* Mobile Safe Area CSS - Solución para navegación móvil */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Asegurar que el contenido no se corte en móviles */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 100px !important; /* Más espacio para navegación del navegador */
+  }
+  
+  .mobile-safe-footer {
+    margin-bottom: 100px !important;
+  }
+  
+  /* Ajustar el mapa en móviles */
+  .leaflet-container {
+    margin-bottom: 30px;
+    height: calc(100vh - 140px) !important; /* Ajustar altura para móviles */
+  }
+  
+  /* Asegurar que los botones flotantes no interfieran */
+  .fixed.bottom-6 {
+    bottom: 120px !important;
+  }
+  
+  /* Optimizar elementos overlay para móviles */
+  .absolute.top-4 {
+    top: 8px;
+  }
+  
+  .absolute.top-16 {
+    top: 60px;
+  }
+  
+  /* Mejorar visibilidad en móviles */
+  .bg-black\/70 {
+    background-color: rgba(0, 0, 0, 0.85) !important;
+  }
+}
+
+/* Animación para el modal de navegación */
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}

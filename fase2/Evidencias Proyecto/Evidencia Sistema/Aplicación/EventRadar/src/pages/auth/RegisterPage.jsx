@@ -138,7 +138,7 @@ const RegisterPage = () => {
             className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full text-white/90 text-sm"
           >
             <Sparkles className="h-4 w-4" />
-            Únete a la comunidad otaku
+            Únete a la comunidad
           </motion.div>
         </motion.div>
 
@@ -151,7 +151,7 @@ const RegisterPage = () => {
         >
           <div className="text-center mb-6">
             <h2 className="text-2xl font-bold text-white mb-2">Crear Cuenta</h2>
-            <p className="text-white/70">Comienza tu aventura otaku</p>
+            <p className="text-white/70">Comienza tu aventura</p>
           </div>
 
           {/* Error general */}
@@ -224,7 +224,7 @@ const RegisterPage = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-purple-400/50 focus:border-purple-400/50 transition-all duration-300"
-                  placeholder="otaku@eventradar.cl"
+                  placeholder="ejemplo@gmail.com"
                   required
                 />
                 {formData.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) && (
@@ -402,7 +402,7 @@ const RegisterPage = () => {
                 🎯 ¿Qué puedes hacer en EventRadar?
               </p>
               <div className="text-white/70 text-xs space-y-1">
-                <div>🎌 Descubrir eventos otaku y anime</div>
+                <div>🎌 Descubrir eventos de anime</div>
                 <div>🎵 Encontrar conciertos de J-Rock</div>
                 <div>🍕 Explorar ferias gastronómicas japonesas</div>
                 <div>🎮 Participar en torneos gaming</div>

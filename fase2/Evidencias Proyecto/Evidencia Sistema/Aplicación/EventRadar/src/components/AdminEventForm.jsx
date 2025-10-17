@@ -5,11 +5,12 @@ import { useUserRole } from '../hooks/useUserRole';
 const AdminEventForm = ({ onEventCreated }) => {
   const { isAdmin, loading: roleLoading } = useUserRole();
   const [isOpen, setIsOpen] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    category: 'otaku',
+    category: 'anime',
     date: '',
     time: '',
     location: '',
@@ -20,7 +21,7 @@ const AdminEventForm = ({ onEventCreated }) => {
   });
 
   const eventCategories = {
-    'otaku': { emoji: '🎌', name: 'Otaku/Anime' },
+    'anime': { emoji: '🎌', name: 'Anime' },
     'musica': { emoji: '🎵', name: 'Música' },
     'gastronomia': { emoji: '🍕', name: 'Gastronomía' },
     'deportes': { emoji: '⚽', name: 'Deportes' },
@@ -63,7 +64,7 @@ const AdminEventForm = ({ onEventCreated }) => {
         setFormData({
           title: '',
           description: '',
-          category: 'otaku',
+          category: 'anime',
           date: '',
           time: '',
           location: '',
@@ -94,10 +95,10 @@ const AdminEventForm = ({ onEventCreated }) => {
 
   return (
     <>
-      {/* ✅ Botón flotante para admin */}
+      {/* ✅ Botón flotante para admin - Más arriba */}
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white p-4 rounded-full shadow-2xl transform hover:scale-110 transition-all duration-200"
+        className="fixed bottom-20 right-6 z-50 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white p-4 rounded-full shadow-2xl transform hover:scale-110 transition-all duration-200"
         title="Agregar Evento (Admin)"
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -107,21 +108,39 @@ const AdminEventForm = ({ onEventCreated }) => {
 
       {/* ✅ Modal para crear evento */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+        <div className={`fixed z-50 transition-all duration-300 ${
+          isMinimized 
+            ? 'top-4 right-4 w-80' 
+            : 'inset-0 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm'
+        }`}>
+          <div className={`bg-white rounded-2xl shadow-2xl transition-all duration-300 ${
+            isMinimized 
+              ? 'w-full' 
+              : 'w-full max-w-2xl max-h-[90vh] overflow-y-auto'
+          }`}>
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
                   ➕ Crear Nuevo Evento
                 </h2>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="text-gray-400 hover:text-gray-600 text-2xl font-bold hover:bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center transition-colors"
-                >
-                  ×
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setIsMinimized(!isMinimized)}
+                    className="text-gray-400 hover:text-gray-600 text-xl font-bold hover:bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center transition-colors"
+                    title={isMinimized ? "Expandir" : "Minimizar"}
+                  >
+                    {isMinimized ? "□" : "─"}
+                  </button>
+                  <button
+                    onClick={() => setIsOpen(false)}
+                    className="text-gray-400 hover:text-gray-600 text-2xl font-bold hover:bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center transition-colors"
+                  >
+                    ×
+                  </button>
+                </div>
               </div>
 
+              {!isMinimized && (
               <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Título */}
                 <div>
@@ -306,6 +325,7 @@ const AdminEventForm = ({ onEventCreated }) => {
                   </button>
                 </div>
               </form>
+              )}
             </div>
           </div>
         </div>

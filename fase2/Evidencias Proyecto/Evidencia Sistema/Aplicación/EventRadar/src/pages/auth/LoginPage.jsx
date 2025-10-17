@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Mail, Lock, ArrowLeft, Eye, EyeOff, Sparkles, MapPin, Coffee } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
+import EventRadarLogo from '../../components/EventRadarLogo';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -112,14 +113,9 @@ const LoginPage = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
-          <div className="inline-flex items-center space-x-3 mb-4">
-            <div className="p-2 bg-white/20 rounded-xl backdrop-blur-sm">
-              <MapPin className="h-8 w-8 text-white" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-white">🎌 EventRadar</h1>
-              <p className="text-white/80 text-sm">Tu radar de eventos otaku</p>
-            </div>
+          <div className="inline-flex flex-col items-center space-y-3 mb-4">
+            <EventRadarLogo size={80} showText={true} variant="white" />
+            <p className="text-white/80 text-sm">Tu radar de eventos</p>
           </div>
           <motion.div
             initial={{ scale: 0 }}
@@ -128,7 +124,7 @@ const LoginPage = () => {
             className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full text-white/90 text-sm"
           >
             <Coffee className="h-4 w-4" />
-            ¡Bienvenido de vuelta, otaku!
+            ¡Bienvenido de vuelta!
           </motion.div>
         </motion.div>
 
@@ -141,7 +137,7 @@ const LoginPage = () => {
         >
           <div className="text-center mb-6">
             <h2 className="text-2xl font-bold text-white mb-2">Iniciar Sesión</h2>
-            <p className="text-white/70">Accede a tu mundo otaku</p>
+            <p className="text-white/70">Accede a tu cuenta</p>
           </div>
 
           {/* Error general */}
@@ -173,7 +169,7 @@ const LoginPage = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-purple-400/50 focus:border-purple-400/50 transition-all duration-300"
-                  placeholder="otaku@eventradar.cl"
+                  placeholder="ejemplo@gmail.com"
                   required
                 />
                 {formData.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) && (
@@ -323,7 +319,7 @@ const LoginPage = () => {
               </p>
               <div className="text-white/70 text-xs space-y-1">
                 <div>🗺️ Ver eventos en el mapa interactivo</div>
-                <div>🎌 Filtrar por categorías otaku</div>
+                <div>🎌 Filtrar por categorías</div>
                 <div>➕ Crear eventos (si eres admin)</div>
                 <div>📱 Recibir notificaciones de nuevos eventos</div>
               </div>
