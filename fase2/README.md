@@ -1,76 +1,37 @@
-# **EventRadar 🎯**
+# 📍 EventRadar
 
-Este es un proyecto [Expo](https://expo.dev) creado con [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
-
----
-
-## **🚀 Primeros pasos**
-
-### 1. Instalar dependencias
-```bash
-npm install
-```
-
-### 2. Iniciar la aplicación
-```bash
-npx expo start
-```
-
-Al ejecutar este comando, en la terminal aparecerán opciones para abrir la app en:
-
-- [Development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Emulador de Android](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [Simulador de iOS](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), un entorno limitado para probar apps Expo.
+**Un Solo Mapa. Todos los Eventos.**  
+EventRadar es una aplicación móvil multiplataforma que centraliza y organiza eventos locales en un mapa interactivo.  
+Permite a los usuarios descubrir actividades culturales, recreativas y educativas de forma rápida y personalizada, integrando filtros, favoritos, alertas y categorización automática mediante inteligencia artificial.
 
 ---
 
-## **📂 Estructura del proyecto**
-```bash
-eventradar/
-├─ app/                  # Rutas y pantallas (Expo Router)
-│  ├─ (tabs)/            # Pestañas principales
-│  │  ├─ index.tsx       # Home: mapa de eventos
-│  │  ├─ favorites.tsx   # Favoritos guardados
-│  │  └─ profile.tsx     # Perfil/ajustes
-│  ├─ event/[id].tsx     # Detalle de evento
-│  ├─ (modals)/filters.tsx # Modal de filtros
-│  └─ _layout.tsx        # Layout global
-├─ src/
-│  ├─ api/               # HTTP + hooks (React Query)
-│  ├─ domain/            # Tipos y validación (Zod)
-│  ├─ store/             # Estado global (Zustand)
-│  ├─ services/          # Servicios del dispositivo (GPS, notificaciones, mapas)
-│  ├─ components/        # UI reutilizable
-│  ├─ utils/             # Funciones puras
-│  └─ config/            # Configuración y constantes
-├─ assets/               # Íconos, imágenes, fuentes
-├─ app.config.ts         # Configuración Expo
-├─ tsconfig.json         # Configuración TypeScript
-├─ .env / .env.example   # Variables de entorno
-└─ package.json          # Scripts y dependencias
-```
+## 🚀 Funcionalidades principales
+- 🔑 **Gestión de usuarios y roles** (ciudadano, organizador, administrador)  
+- 🗺️ **Mapa interactivo de eventos** con integración de Google Maps / Mapbox  
+- 🔍 **Filtros y búsqueda avanzada** por fecha, categoría y distancia  
+- ⭐ **Favoritos y notificaciones** para eventos destacados  
+- 🛠️ **Gestión de eventos** para organizadores y moderación por administradores  
+- 🤖 **IA para categorización y resúmenes automáticos** de eventos  
+- 🔒 **Seguridad** con autenticación JWT y cifrado de contraseñas  
 
 ---
 
-## **🧹 Reiniciar proyecto en limpio**
-
-Si quieres borrar el código inicial y empezar desde cero:
-
-```bash
-npm run reset-project
-```
-
-Esto moverá el código de ejemplo a **app-example** y dejará la carpeta **app** lista para desarrollo.
+## 📂 Estructura del Proyecto
+👉 Puedes ver la presentación completa aquí:  
+[**EventRadar – Presentación en Gamma**](https://gamma.app/docs/EventRadar-rdmkhrb1fbqnkkw)
 
 ---
 
-## **📖 Documentación útil**
-- [📘 Documentación oficial de Expo](https://docs.expo.dev/)  
-- [📚 Tutorial paso a paso](https://docs.expo.dev/tutorial/introduction/)  
+## 👥 Equipo
+- **Alejandro Troncoso Vicuña**  
+- **Diego Valenzuela** 
+- **Iván** 
 
 ---
 
-## **🤝 Comunidad**
-- [Expo en GitHub](https://github.com/expo/expo)  
-- [Discord oficial](https://chat.expo.dev)  
+## 📜 Licencia
+Este proyecto es de uso académico en el marco del **Proyecto APT – DUOC UC**.  
+Se permite su uso con fines educativos y de investigación.  
+
+---
